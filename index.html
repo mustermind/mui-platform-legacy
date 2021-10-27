@@ -113,8 +113,8 @@ button {
   <a href="#PartCharacterization">Yeni Parça</a>
   <a href="#Visualization">Görselleştirme</a>
   <a href="#SheetCreation">Proses Ayar Fişi</a>
-  <a href="#ResultPreview">Ön izleme</a>
-  <a href="#Feedback">Geri bildirim</a>
+  <a href="#ResultPreview">Ön Izleme</a>
+  <a href="#Feedback">Geri Bildirim</a>
 </div>
 
 
@@ -453,19 +453,19 @@ Fiber / Katkı Malzemeleri [%]<br><input type="number" id="fib_new" min=0 step=5
 
 <button onclick="UserInput()">Yeni Parça Dizisi Oluştur</button><br><br>
 
-<h2 id="Visualization">Visualization</h2>
-<p>Click the button to create a 3D scatter plot of your new and old parts. Your old parts will appear in shades of blue and the new part will be light red. This plot visually indicates which old part is closest and most similiar to your current project.</p>
-<p>Please ensure that the red point is surrounded by blue points. While you can still use the service if the red dot is an outlier, predicition accuracy can drastically decrease. Therefore it is recommended to enter different old parts, re-create the CSV and the plot until the red dot is in the center.</p><br>
+<h2 id="Visualization">Görselleştirme</h2>
+<p>Aşağıdaki düğmeyi tıklayarak eski ve yeni parçalarınızın 3D serpme diyagramını oluşturun. Eski parçalarınız kırmızı yeni parçanız ise gri görünecektir.Bu diyagram eski parçalarınızdan hangisinin yeni parçanıza en yakın olduğunu gösterecektir.</p>
+<p>Lütfen gri noktaların kırmızı noktalarla çevrili olduğundan emin olun. Eğer gri nokta çizgi dışında ise sonucun tutarlılık oranı önemli oranda düşecektir bu nedenle başka eski parçalarınızın verilerini girerek CVS dosyasını tekrar oluşturun, bu döngüyü gri nokta merkeze gelene kadar tekrarlayın.</p><br>
 
 <!-- Create Plot -->
-<button type="button" onclick="PlotParts()">(Re-)Plot Parts</button><br><br>
+<button type="button" onclick="PlotParts()">Diyagramı Oluştur</button><br><br>
 
 <!-- Spaceholder (div) for Plot -->
 <div id="PartScatterPlot"></div>
 
-<h2 id="SheetCreation">Molding Sheet</h2>
-<p>Please find below your created old parts CSV and new part array. You need to add your e-mail address and agree to the general terms and conditions in order to receive your molding sheet. Submit all information and receive the molding sheet.</p>
-<p>For your convenience, you can copy and save the old part CSV to re-use it for your next predicition, but it is recommended to use different, more similiar parts to the most current project per predicition.</p><br>
+<h2 id="SheetCreation">Proses Ayar Fişi</h2>
+<p>Oluşturduğunuz CSV ve yeni parça dizisi aşağıdadır. Proses ayar fişinizi almak için e-posta adresinizi eklemeniz ve genel şartları ve koşulları kabul etmeniz gerekir. Tüm bilgileri gönderin ve proses ayar fişinizi alın.</p>
+<p>Oluşturduğunuz CSV'yi diğer projelerinizde kullanmak üzere kopyalayabilirsiniz fakat daha gerçekci sonuçlar elde edebilmek adına her projenizde o projeye en çok benzeyen parçaların verilerini girmeniz önerilir.</p><br>
 
 <!-- Hide send confirmation with hidden iframe-->
 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" width="0" height="0" tabindex="-1" title="empty"></iframe>
@@ -475,23 +475,23 @@ Fiber / Katkı Malzemeleri [%]<br><input type="number" id="fib_new" min=0 step=5
 <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfxMxivKFrdoYViSsfzcv2Mb3JXdVl0am56-zX1mBHKnkiCjw/formResponse" method="post" target="hidden_iframe";>
 
 <!-- order form content-->
-<label>E-Mail</label><br><input type="email" required name="entry.1612017441"><br>
+<label>E-Posta</label><br><input type="email" required size=24 name="entry.1612017441"><br>
 <label>CSV</label><br><textarea id="CSV" rows="20" cols="25" required name="entry.1042882814"></textarea><br>
-<label>User Input</label><br><input type="text" size=25 id="InputCSV" required name="entry.1032610544"><br><br>
+<label>Dizi (Kullanıcı Girişi)</label><br><input type="text" size=24 id="InputCSV" required name="entry.1032610544"><br><br>
 <input type="checkbox" required id="agreement" name="agreement" value="agreement">
-<label for="agreement">I agree to the <a href="https://mustermind.de/terms" target="_blank">terms</a> and <a href="https://mustermind.de/privacy-policy" target="_blank">privacy policy</a>.</label><br>
+<label for="agreement">Katılıyorum <a href="https://mustermind.de/terms" target="_blank">Genel Şartlar ve Koşullar (EN/DE)</a> ve <a href="https://mustermind.de/privacy-policy" target="_blank">Veri Gizliliği Politika (EN/DE)</a>.</label><br>
 
-<br><button type="submit" onclick="setTimeout(Preview, 300000)">Submit</button>
+<br><button type="submit" onclick="setTimeout(Preview, 300000)">Gönder</button>
 </form>
 
-<h2 id="ResultPreview">Preview</h2>
-<p>Your data will immediately be processed upon submission. It can take up to 5 minutes for the preview to be shown. Do not refresh your browser, it will update automatically. In the meantime, you will receive a copy of your molding sheet via e-mail. Please check your inbox.</p><br>
+<h2 id="ResultPreview">Ön Izleme</h2>
+<p>Verileriniz gönderildikten hemen sonra işlenmeye başlanacaktır. Sonuçların gösterilmesi 5 dakika kadar sürebilir. Tarayıcınızı yenilemeyin, otomatik olarak güncellenir. Bu arada, proses ayar fişinizin bir kopyasını e-posta yoluyla alacaksınız. Lütfen gelen kutunuzu kontrol edin.</p><br>
 
 <!-- iframe for Preview -->
 <div id="Preview"></div>
 
-<h2 id="Feedback">Feedback</h2>	
- <p>To report bugs, give a feedback or comment on and vote for other users' feedback, visit <a href="https://mustermind.convas.io/" target="_blank">mustermind.convas.io</a>.</p>
+<h2 id="Feedback">Geri Bildirim</h2>	
+<p>Hataları bildirmek için geri bildirimde bulunun veya yorum yapın ve diğer kullanıcıların geri bildirimlerine oy verin, <a href="https://mustermind.convas.io/" target="_blank">MUSTERNIND.CONVAS.IO</a>'yu ziyaret edin.</p>
 
 
 </div>
@@ -595,7 +595,7 @@ function PlotParts() {
       opacity: 0.8
     },
     type: 'scatter3d',
-    name: 'Part 1'
+    name: 'Eski Parça 1'
   };
 
   var part2 = {
@@ -613,7 +613,7 @@ function PlotParts() {
       opacity: 0.8
     },
     type: 'scatter3d',
-    name: 'Part 2'
+    name: 'Eski Parça 2'
   };
 
   var part3 = {
@@ -632,7 +632,7 @@ function PlotParts() {
       opacity: 0.8
     },
     type: 'scatter3d',
-    name: 'Part 3'
+    name: 'Eski Parça 3'
   };
 
   var part4 = {
@@ -650,7 +650,7 @@ function PlotParts() {
       opacity: 0.8
     },
     type: 'scatter3d',
-    name: 'Part 4'
+    name: 'Eski Parça 4'
   };
 
   var part5 = {
@@ -668,7 +668,7 @@ function PlotParts() {
       opacity: 0.8
     },
     type: 'scatter3d',
-    name: 'Part 5'
+    name: 'Eski Parça 5'
   };
   
     var newpart = {
@@ -686,7 +686,7 @@ function PlotParts() {
       opacity: 0.8
     },
     type: 'scatter3d',
-    name: 'New Part'
+    name: 'Yeni Parça'
   };
 
 
@@ -694,9 +694,9 @@ function PlotParts() {
   var parts = [part1, part2, part3, part4, part5, newpart];
   var layout = {
       scene: {
-          xaxis:{title: 'Avg. wall thickness (x)'},
-          yaxis:{title: 'Volume (y)'},
-          zaxis:{title: 'Max. flow length (z)'},
+          xaxis:{title: 'Ort. Et Kalınlığı (x)'},
+          yaxis:{title: 'Hacim (y)'},
+          zaxis:{title: 'Maks. Akış Uzunluğu (z)'},
           },
       autosize: true,
       margin: {
