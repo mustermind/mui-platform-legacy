@@ -34,7 +34,7 @@ font-family: "Calibri Light", "Arial";
  
  /* Head bar styling */
  .headbar {
- height: 80px;
+ height: 65px;
  width: 100%;
  left: 0;
  top: 0;
@@ -109,34 +109,34 @@ button {
 
 <!-- Side Navigation -->
 <div class="sidenav">
-  <a href="#CSVCreation">Legacy Parts</a>
-  <a href="#PartCharacterization">New Part</a>
-  <a href="#Visualization">Visualization</a>
-  <a href="#SheetCreation">Molding Sheet</a>
-  <a href="#ResultPreview">Preview</a>
-  <a href="#Feedback">Feedback</a>
+  <a href="#CSVCreation">Eski Parçalar</a>
+  <a href="#PartCharacterization">Yeni Parça</a>
+  <a href="#Visualization">Görselleştirme</a>
+  <a href="#SheetCreation">Proses Ayar Fişi</a>
+  <a href="#ResultPreview">Ön izleme</a>
+  <a href="#Feedback">Geri bildirim</a>
 </div>
 
 
 <!-- Main Application -->
 <div class="main">
-<h2 id="CSVCreation">Legacy Parts Characterization</h2>
-<p>Enter process parameters, material, part and mold design information of old parts similiar to your current project. You can fill in up to 5 old parts, but a minimum of 5 parts is recommended. Click the button below the table to create the required CSV (you can check the created CSV in a following section).</p><br>
+<h2 id="CSVCreation">Eski Parça Karakterizasyonu</h2>
+<p>Eski projelerinizin arasından yeni projenize benzer parçaların proses parametreleri, malzeme, parça ve kalıp tasarım bilgilerini girin. 5 adet eski parçaya kadar doldurabilirsiniz bununla beraber sağlıklı sonuç alabilmek için en az 3 adet benzer proje bilgisini girmeniz şiddetle önerilir. Tabloyu doldurduktan sonra tablonun altında yer alan düğmeyi tıklayarak gerekli CSV dosyasını oluşturun. (Oluşturulan CSV'yi sonraki bölümde kontrol edebilirsiniz)</p><br>
 <!-- CSV Creation Table -->
 <table id="legacy">
   <tr>
 	<th style="background-color: #fff"></th>
-    <th>legacy part 1</th>
-    <th>legacy part 2</th>
-    <th>legacy part 3</th>
-	<th>legacy part 4</th>
-	<th>legacy part 5</th>
+    <th>Eski Parça 1</th>
+    <th>Eski Parça 2</th>
+    <th>Eski Parça 3</th>
+	<th>Eski Parça 4</th>
+	<th>Eski Parça 5</th>
   </tr>
 <!-- Part and mold design -->
-  <tr><td><b>Part and mold design</b></td></tr>
+  <tr><td><b>Parça ve Kalıp Tasarımı</b></td></tr>
 <!-- Min. Wall Thicknesses -->
   <tr>
-    <td>Min. Wall Thickness [mm]</td>
+    <td>Min. Et Kalınlığı [mm]</td>
     <td><input type="number" id="wt_min1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="wt_min2" min=0 style="width: 6em;"></td>
     <td><input type="number" id="wt_min3" min=0 style="width: 6em;"></td>
@@ -145,7 +145,7 @@ button {
   </tr>
 <!-- Avg. Wall Thicknesses -->
   <tr>
-    <td>Avg. Wall Thickness [mm]</td>
+    <td>Ort. Et Kalınlığı [mm]</td>
     <td><input type="number" id="wt_avg1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="wt_avg2" min=0 style="width: 6em;"></td>
     <td><input type="number" id="wt_avg3" min=0 style="width: 6em;"></td>
@@ -154,7 +154,7 @@ button {
 </tr>
 <!-- Max. Wall Thickness -->
 <tr>
-	<td>Max. Wall Thickness [mm]</td>
+	<td>Maks. Et Kalınlığı [mm]</td>
     <td><input type="number" id="wt_max1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="wt_max2" min=0 style="width: 6em;"></td>
     <td><input type="number" id="wt_max3" min=0 style="width: 6em;"></td>
@@ -163,7 +163,7 @@ button {
 </tr>
 <!-- Projected Area -->
 <tr>
-	<td>Projected Area [mm²]</td>
+	<td>İzdüşüm Alanı [mm²]</td>
     <td><input type="number" id="A_proj1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="A_proj2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="A_proj3" min=0 style="width: 6em;"></td>
@@ -172,7 +172,7 @@ button {
 </tr>
 <!-- Volume -->
 <tr>
-	<td>Volume [cm³]</td>
+	<td>Hacim [cm³]</td>
     <td><input type="number" id="vol1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="vol2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="vol3" min=0 style="width: 6em;"></td>
@@ -181,7 +181,7 @@ button {
 </tr>
 <!-- No. of gates -->
 <tr>
-	<td>No. of gates</td>
+	<td>Yolluk Giriş Sayısı</td>
     <td><input type="number" id="no_gate1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="no_gate2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="no_gate3" min=0 style="width: 6em;"></td>
@@ -190,7 +190,7 @@ button {
 </tr>
 <!-- Max Flow length -->
 <tr>
-	<td>Max. Flow length [mm]</td>
+	<td>Maks. Akış Uzunluğu [mm]</td>
     <td><input type="number" id="l_flow1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="l_flow2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="l_flow3" min=0 style="width: 6em;"></td>
@@ -199,7 +199,7 @@ button {
 </tr>
 <!-- Gate diameter -->
 <tr>
-	<td>Gate diameter [mm]</td>
+	<td>Yolluk Giriş Çapı [mm]</td>
     <td><input type="number" id="d_gate1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="d_gate2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="d_gate3" min=0 style="width: 6em;"></td>
@@ -207,10 +207,10 @@ button {
     <td><input type="number" id="d_gate5" min=0 style="width: 6em;"></td>
 </tr>
 <!-- Material data section -->
-<tr><td><b>Material</b></td></tr>
+<tr><td><b>Malzeme</b></td></tr>
 <!-- Material type -->
 <tr>
-  <td>Material type</td>
+  <td>Malzeme Türü</td>
   <td><select id="mat1" style="width: 6em;">
     <option value="-"> </option>
     <option value="PP">PP</option>
@@ -318,7 +318,7 @@ button {
 </tr>
 	<!-- Fiber -->
 <tr>
-	<td>Fibers/Fillers [%]</td>
+	<td>Fiber / Katkı Malzemeleri [%]</td>
     <td><input type="number" id="fib1" min=0 step=5 style="width: 6em;"></td>
     <td><input type="number" id="fib2" min=0 step=5 style="width: 6em;"></td> 
     <td><input type="number" id="fib3" min=0 step=5 style="width: 6em;"></td>
@@ -326,10 +326,10 @@ button {
     <td><input type="number" id="fib5" min=0 step=5 style="width: 6em;"></td>
 </tr>
 <!-- Process data section -->
-<tr><td><b>Process parameters</b></td></tr>
+<tr><td><b>Proses Parametreleri</b></td></tr>
 <!-- Injection time -->
 <tr>
-	<td>Fill time [sec.]</td>
+	<td>Dolum Süresi [sec.]</td>
     <td><input type="number" id="t_inj1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="t_inj2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="t_inj3" min=0 style="width: 6em;"></td>
@@ -338,7 +338,7 @@ button {
 </tr>
 <!-- Melt temperature -->
 <tr>
-	<td>Melt temperature [°C]</td>
+	<td>Eriyik Sıcaklığı [°C]</td>
     <td><input type="number" id="T_melt1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="T_melt2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="T_melt3" min=0 style="width: 6em;"></td>
@@ -347,7 +347,7 @@ button {
 </tr>
 <!-- Mold temperature -->
 <tr>
-	<td>Mold temperature [°C]</td>
+	<td>Kalıp Sıcaklığı [°C]</td>
     <td><input type="number" id="T_mold1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="T_mold2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="T_mold3" min=0 style="width: 6em;"></td>
@@ -356,7 +356,7 @@ button {
 </tr>
 <!-- Clamp force -->
 <tr>
-	<td>Clamp force [t]</td>
+	<td>Kapama Kuvveti [t]</td>
     <td><input type="number" id="F_clamp1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="F_clamp2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="F_clamp3" min=0 style="width: 6em;"></td>
@@ -366,7 +366,7 @@ button {
 
 <!-- Injection pressure -->
 <tr>
-	<td>Injection pressure [bar]</td>
+	<td>Enjeksiyon Basıncı [bar]</td>
     <td><input type="number" id="p_inj1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="p_inj2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="p_inj3" min=0 style="width: 6em;"></td>
@@ -375,7 +375,7 @@ button {
 </tr>
 <!-- Packing Pressure -->
 <tr>
-	<td>Packing pressure [bar]</td>
+	<td>Tutma Basıncı [bar]</td>
     <td><input type="number" id="p_pack1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="p_pack2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="p_pack3" min=0 style="width: 6em;"></td>
@@ -384,7 +384,7 @@ button {
 </tr>
 <!-- Packing time -->
 <tr>
-	<td>Packing time [sec.]</td>
+	<td>Tutma Zamanı [sec.]</td>
     <td><input type="number" id="t_pack1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="t_pack2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="t_pack3" min=0 style="width: 6em;"></td>
@@ -393,7 +393,7 @@ button {
 </tr>
 <!-- Cooling time -->
 <tr>
-	<td>Cooling time [sec.]</td>
+	<td>Soğuma Süresi [sec.]</td>
     <td><input type="number" id="t_cool1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="t_cool2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="t_cool3" min=0 style="width: 6em;"></td>
@@ -402,7 +402,7 @@ button {
 </tr>
 <!-- Cycle time -->
 <tr>
-	<td>Cycle time [sec.]</td>
+	<td>Çevrim Süresi [sec.]</td>
     <td><input type="number" id="t_cycle1" min=0 style="width: 6em;"></td>
     <td><input type="number" id="t_cycle2" min=0 style="width: 6em;"></td> 
     <td><input type="number" id="t_cycle3" min=0 style="width: 6em;"></td>
@@ -413,22 +413,22 @@ button {
 <br>
 
 <!-- Create CSV Buttons -->
-<button onclick="NewCSV()">Create Legacy Parts CSV</button><br><br>
+<button onclick="NewCSV()">Eski Parçalar için CSV Oluştur</button><br><br>
 
-<h2 id="PartCharacterization">New Part Characterization</h2>
-<p>Enter part and mold design as well as material information of your current project for which you would like to predict process settings. Afterwards, click the button below to create an array of your input (you can check the created array in a following section).</p><br>
+<h2 id="PartCharacterization">Yeni Parça Karakterizasyonu</h2>
+<p>Proses ayar fişini oluşturmak istediğiniz parçanızın kalıp ve ürün tasarım bilgileri ile malzeme bilgilerini girin. Ardından tablonun altındaki düğmeyi tıklayarak girdi dizisini oluşturun. (Oluşturulan diziyi sonraki bölümde kontrol edebilirsiniz)</p><br>
 
 <!-- Input for new part -->
 <div>
-Min. wall thickness [mm]<br><input type="number" min=0 id="wt_min_new"><br><br>
-Avg. wall thickness [mm]<br><input type="number" min=0 id="wt_avg_new"><br><br>
-Max. wall thickness [mm]<br><input type="number" min=0 id="wt_max_new"><br><br>
-Projected area [mm²]<br><input type="number" min=0 id="A_proj_new"><br><br>
-Volume [cm³]<br><input type="number" min=0 id="vol_new"><br><br>
-No. of gates<br><input type="number" min=0 id="no_gate_new"><br><br>
-Max. flow length [mm]<br><input type="number" min=0 id="l_flow_new"><br><br>
-Gate diameter [mm]<br><input type="number" min=0 id="d_gate_new"><br><br>
-Material type:<br><select id="mat_new">
+Min. Et Kalınlığı [mm]<br><input type="number" min=0 id="wt_min_new"><br><br>
+Ort. Et Kalınlığı [mm]<br><input type="number" min=0 id="wt_avg_new"><br><br>
+Maks. Et Kalınlığı [mm]<br><input type="number" min=0 id="wt_max_new"><br><br>
+İzdüşüm Alanı [mm²]<br><input type="number" min=0 id="A_proj_new"><br><br>
+Hacim [cm³]<br><input type="number" min=0 id="vol_new"><br><br>
+Yolluk Giriş Sayısı<br><input type="number" min=0 id="no_gate_new"><br><br>
+Maks. Akış Uzunluğu [mm]<br><input type="number" min=0 id="l_flow_new"><br><br>
+Yolluk Giriş Çapı [mm]<br><input type="number" min=0 id="d_gate_new"><br><br>
+Malzeme Türü<br><select id="mat_new">
     <option value="-"> </option>
     <option value="PP">PP</option>
     <option value="PE-LD">PE-LD</option>
@@ -448,10 +448,10 @@ Material type:<br><select id="mat_new">
     <option value="other">Other</option>
    </select><br><br>
 MFR [g/ 10 min.]<br><input type="number" min=0 id="mfr_new"><br><br>
-Fibers/Fillers [%]<br><input type="number" id="fib_new" min=0 step=5><br><br>
+Fiber / Katkı Malzemeleri [%]<br><input type="number" id="fib_new" min=0 step=5><br><br>
 </div>
 
-<button onclick="UserInput()">Create New Part Array</button><br><br>
+<button onclick="UserInput()">Yeni Parça Dizisi Oluştur</button><br><br>
 
 <h2 id="Visualization">Visualization</h2>
 <p>Click the button to create a 3D scatter plot of your new and old parts. Your old parts will appear in shades of blue and the new part will be light red. This plot visually indicates which old part is closest and most similiar to your current project.</p>
