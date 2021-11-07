@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+	<title>mustermind v0.1 (Beta)</title>
+<head>
+<!-- Import Plotly.js for ScatterPlot-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+ /* General styling (body) */
+ body {
+  font-family: "Calibri Light", "Arial";
+ }
+
+h1 {
+font-family: "Calibri Light", "Arial";
+}
+
+ p {
+ font-size:14px;
+ }
+ 
+ table {
+  align: center;
+  width: 100%;
+ }
+
+ th {
+  color: #fff;
+  background-color: #ab161c;
+  text-align: center;
+  padding: 6px 0px 6px;
+  border: 2px solid #fff;
+ }
+ 
+ /* Head bar styling */
+ .headbar {
+ height: 65px;
+ width: 100%;
+ left: 0;
+ top: 0;
+ z-index: 1;
+ position: fixed;
+ color: #fff;
+ background-color: #ab161c;
+ padding: 0px 20px;
+ }
+
+ /* Side Navigation Styling */
+ .sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 65px;
+  left: 0;
+  background-color: #f2f2f2;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 16px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #000;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #ab161c;
+}
+.sidenav a:active {
+ font-weight: bold;
+ }
+
+.main {
+  margin-left: 200px;
+  margin-top: 80px;
+  padding: 15px 20px;
+}
+
+/* Button styling */
+button {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Calibri Light", "Arial";
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+ }
+
+ /* iframe styling */
+ iframe {
+  display:block;
+ }
+
+</style>
+</head>
+<body>
+
+<!-- Head Bar -->
+<div class="headbar"><img src="img/Logo_hi-res.png" height="60" alt="brightmind logo">
+<p style="text-align:right; float:right; padding-right: 35px; padding-top:7px;"><a href="index.html">TR</a> / ENG</p></div>
+
+<!-- Side Navigation -->
+<div class="sidenav">
+  <a href="#CSVCreation">Legacy Parts</a>
+  <a href="#PartCharacterization">New Part</a>
+  <a href="#Visualization">Visualization</a>
+  <a href="#SheetCreation">Molding Sheet</a>
+  <a href="#ResultPreview">Preview</a>
+  <a href="#Feedback">Feedback</a>
+</div>
+
+
+<!-- Main Application -->
+<div class="main">
+<h2 id="CSVCreation">Legacy Parts Characterization</h2>
+<p>Enter process parameters, material, part and mold design information of old parts similiar to your current project. You can fill in up to 5 old parts, but a minimum of 5 parts is recommended. Click the button below the table to create the required CSV (you can check the created CSV in a following section).</p><br>
+<!-- CSV Creation Table -->
+<table id="legacy">
+  <tr>
+	<th style="background-color: #fff"></th>
+    <th>legacy part 1</th>
+    <th>legacy part 2</th>
+    <th>legacy part 3</th>
+	<th>legacy part 4</th>
+	<th>legacy part 5</th>
+  </tr>
+<!-- Part and mold design -->
+  <tr><td><b>Part and mold design</b></td></tr>
+<!-- Min. Wall Thicknesses -->
+  <tr>
+    <td>Min. Wall Thickness [mm]</td>
+    <td><input type="number" id="wt_min1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_min2" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_min3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_min4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_min5" min=0  step="0.1"style="width: 6em;"></td>
+  </tr>
+<!-- Avg. Wall Thicknesses -->
+  <tr>
+    <td>Avg. Wall Thickness [mm]</td>
+    <td><input type="number" id="wt_avg1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_avg2" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_avg3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_avg4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_avg5" min=0 step="0.1" style="width: 6em;"></td>
+</tr>
+<!-- Max. Wall Thickness -->
+<tr>
+	<td>Max. Wall Thickness [mm]</td>
+    <td><input type="number" id="wt_max1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_max2" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_max3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_max4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="wt_max5" min=0 step="0.1" style="width: 6em;"></td>
+</tr>
+<!-- Projected Area -->
+<tr>
+	<td>Projected Area [mm²]</td>
+    <td><input type="number" id="A_proj1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="A_proj2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="A_proj3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="A_proj4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="A_proj5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Volume -->
+<tr>
+	<td>Volume [cm³]</td>
+    <td><input type="number" id="vol1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="vol2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="vol3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="vol4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="vol5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- No. of gates -->
+<tr>
+	<td>No. of gates</td>
+    <td><input type="number" id="no_gate1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="no_gate2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="no_gate3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="no_gate4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="no_gate5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Max Flow length -->
+<tr>
+	<td>Max. Flow length [mm]</td>
+    <td><input type="number" id="l_flow1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="l_flow2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="l_flow3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="l_flow4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="l_flow5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Gate diameter -->
+<tr>
+	<td>Gate diameter [mm]</td>
+    <td><input type="number" id="d_gate1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="d_gate2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="d_gate3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="d_gate4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="d_gate5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Material data section -->
+<tr><td><b>Material</b></td></tr>
+<!-- Material type -->
+<tr>
+  <td>Material type</td>
+  <td><select id="mat1" style="width: 6em;">
+    <option value="-"> </option>
+    <option value="PP">PP</option>
+    <option value="PE-LD">PE-LD</option>
+    <option value="PE-HD">PE-HD</option>
+    <option value="ABS">ABS</option>
+    <option value="PS">PS</option>
+    <option value="SAN">SAN</option>
+    <option value="PVC">PVC</option>
+    <option value="PMMA">PMMA</option>
+    <option value="PC">PC</option>
+    <option value="PET">PET</option>
+    <option value="PBT">PBT</option>
+    <option value="POM">POM</option>
+    <option value="PA6">PA6</option>
+    <option value="PA66">PA66</option>
+    <option value="PA12">PA12</option>
+    <option value="other">Other</option>
+   </select></td>
+   <td><select id="mat2" style="width: 6em;">
+    <option value="-"> </option>
+    <option value="PP">PP</option>
+    <option value="PE-LD">PE-LD</option>
+    <option value="PE-HD">PE-HD</option>
+    <option value="ABS">ABS</option>
+    <option value="PS">PS</option>
+    <option value="SAN">SAN</option>
+    <option value="PVC">PVC</option>
+    <option value="PMMA">PMMA</option>
+    <option value="PC">PC</option>
+    <option value="PET">PET</option>
+    <option value="PBT">PBT</option>
+    <option value="POM">POM</option>
+    <option value="PA6">PA6</option>
+    <option value="PA66">PA66</option>
+    <option value="PA12">PA12</option>
+    <option value="other">Other</option>
+   </select></td>
+   <td><select id="mat3" style="width: 6em;">
+    <option value="-"> </option>
+    <option value="PP">PP</option>
+    <option value="PE-LD">PE-LD</option>
+    <option value="PE-HD">PE-HD</option>
+    <option value="ABS">ABS</option>
+    <option value="PS">PS</option>
+    <option value="SAN">SAN</option>
+    <option value="PVC">PVC</option>
+    <option value="PMMA">PMMA</option>
+    <option value="PC">PC</option>
+    <option value="PET">PET</option>
+    <option value="PBT">PBT</option>
+    <option value="POM">POM</option>
+    <option value="PA6">PA6</option>
+    <option value="PA66">PA66</option>
+    <option value="PA12">PA12</option>
+    <option value="other">Other</option>
+   </select></td>
+   <td><select id="mat4" style="width: 6em;">
+    <option value="-"> </option>
+    <option value="PP">PP</option>
+    <option value="PE-LD">PE-LD</option>
+    <option value="PE-HD">PE-HD</option>
+    <option value="ABS">ABS</option>
+    <option value="PS">PS</option>
+    <option value="SAN">SAN</option>
+    <option value="PVC">PVC</option>
+    <option value="PMMA">PMMA</option>
+    <option value="PC">PC</option>
+    <option value="PET">PET</option>
+    <option value="PBT">PBT</option>
+    <option value="POM">POM</option>
+    <option value="PA6">PA6</option>
+    <option value="PA66">PA66</option>
+    <option value="PA12">PA12</option>
+    <option value="other">Other</option>
+   </select></td>
+   <td><select id="mat5" style="width: 6em;">
+    <option value="-"> </option>
+    <option value="PP">PP</option>
+    <option value="PE-LD">PE-LD</option>
+    <option value="PE-HD">PE-HD</option>
+    <option value="ABS">ABS</option>
+    <option value="PS">PS</option>
+    <option value="SAN">SAN</option>
+    <option value="PVC">PVC</option>
+    <option value="PMMA">PMMA</option>
+    <option value="PC">PC</option>
+    <option value="PET">PET</option>
+    <option value="PBT">PBT</option>
+    <option value="POM">POM</option>
+    <option value="PA6">PA6</option>
+    <option value="PA66">PA66</option>
+    <option value="PA12">PA12</option>
+    <option value="other">Other</option>
+   </select></td>
+</tr>
+	<!-- MFR -->
+<tr>
+	<td>MFR [g/10min.]</td>
+    <td><input type="number" id="mfr1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="mfr2" min=0 step="0.1" style="width: 6em;"></td> 
+    <td><input type="number" id="mfr3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="mfr4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="mfr5" min=0 step="0.1" style="width: 6em;"></td>
+</tr>
+	<!-- Fiber -->
+<tr>
+	<td>Fibers/Fillers [%]</td>
+    <td><input type="number" id="fib1" min=0 step=5 style="width: 6em;"></td>
+    <td><input type="number" id="fib2" min=0 step=5 style="width: 6em;"></td> 
+    <td><input type="number" id="fib3" min=0 step=5 style="width: 6em;"></td>
+    <td><input type="number" id="fib4" min=0 step=5 style="width: 6em;"></td>
+    <td><input type="number" id="fib5" min=0 step=5 style="width: 6em;"></td>
+</tr>
+<!-- Process data section -->
+<tr><td><b>Process parameters</b></td></tr>
+<!-- Injection time -->
+<tr>
+	<td>Fill time [sec.]</td>
+    <td><input type="number" id="t_inj1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_inj2" min=0 step="0.1" style="width: 6em;"></td> 
+    <td><input type="number" id="t_inj3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_inj4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_inj5" min=0 step="0.1" style="width: 6em;"></td>
+</tr>
+<!-- Melt temperature -->
+<tr>
+	<td>Melt temperature [°C]</td>
+    <td><input type="number" id="T_melt1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="T_melt2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="T_melt3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="T_melt4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="T_melt5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Mold temperature -->
+<tr>
+	<td>Mold temperature [°C]</td>
+    <td><input type="number" id="T_mold1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="T_mold2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="T_mold3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="T_mold4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="T_mold5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Clamp force -->
+<tr>
+	<td>Clamp force [t]</td>
+    <td><input type="number" id="F_clamp1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="F_clamp2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="F_clamp3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="F_clamp4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="F_clamp5" min=0 style="width: 6em;"></td>
+</tr>
+
+<!-- Injection pressure -->
+<tr>
+	<td>Injection pressure [bar]</td>
+    <td><input type="number" id="p_inj1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="p_inj2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="p_inj3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="p_inj4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="p_inj5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Packing Pressure -->
+<tr>
+	<td>Packing pressure [bar]</td>
+    <td><input type="number" id="p_pack1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="p_pack2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="p_pack3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="p_pack4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="p_pack5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Packing time -->
+<tr>
+	<td>Packing time [sec.]</td>
+    <td><input type="number" id="t_pack1" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="t_pack2" min=0 style="width: 6em;"></td> 
+    <td><input type="number" id="t_pack3" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="t_pack4" min=0 style="width: 6em;"></td>
+    <td><input type="number" id="t_pack5" min=0 style="width: 6em;"></td>
+</tr>
+<!-- Cooling time -->
+<tr>
+	<td>Cooling time [sec.]</td>
+    <td><input type="number" id="t_cool1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_cool2" min=0 step="0.1" style="width: 6em;"></td> 
+    <td><input type="number" id="t_cool3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_cool4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_cool5" min=0 step="0.1" style="width: 6em;"></td>
+</tr>
+<!-- Cycle time -->
+<tr>
+	<td>Cycle time [sec.]</td>
+    <td><input type="number" id="t_cycle1" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_cycle2" min=0 step="0.1" style="width: 6em;"></td> 
+    <td><input type="number" id="t_cycle3" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_cycle4" min=0 step="0.1" style="width: 6em;"></td>
+    <td><input type="number" id="t_cycle5" min=0 step="0.1" style="width: 6em;"></td>
+</tr>
+</table>
+<br>
+
+<!-- Create CSV Buttons -->
+<button onclick="NewCSV()">Create Legacy Parts CSV</button><br><br>
+
+<h2 id="PartCharacterization">New Part Characterization</h2>
+<p>Enter part and mold design as well as material information of your current project for which you would like to predict process settings. Afterwards, click the button below to create an array of your input (you can check the created array in a following section).</p><br>
+
+<!-- Input for new part -->
+<div>
+Min. wall thickness [mm]<br><input type="number" min=0 step="0.1" id="wt_min_new"><br><br>
+Avg. wall thickness [mm]<br><input type="number" min=0 step="0.1" id="wt_avg_new"><br><br>
+Max. wall thickness [mm]<br><input type="number" min=0 step="0.1" id="wt_max_new"><br><br>
+Projected area [mm²]<br><input type="number" min=0 id="A_proj_new"><br><br>
+Volume [cm³]<br><input type="number" min=0 id="vol_new"><br><br>
+No. of gates<br><input type="number" min=0 id="no_gate_new"><br><br>
+Max. flow length [mm]<br><input type="number" min=0 id="l_flow_new"><br><br>
+Gate diameter [mm]<br><input type="number" min=0 id="d_gate_new"><br><br>
+Material type:<br><select id="mat_new">
+    <option value="-"> </option>
+    <option value="PP">PP</option>
+    <option value="PE-LD">PE-LD</option>
+    <option value="PE-HD">PE-HD</option>
+    <option value="ABS">ABS</option>
+    <option value="PS">PS</option>
+    <option value="SAN">SAN</option>
+    <option value="PVC">PVC</option>
+    <option value="PMMA">PMMA</option>
+    <option value="PC">PC</option>
+    <option value="PET">PET</option>
+    <option value="PBT">PBT</option>
+    <option value="POM">POM</option>
+    <option value="PA6">PA6</option>
+    <option value="PA66">PA66</option>
+    <option value="PA12">PA12</option>
+    <option value="other">Other</option>
+   </select><br><br>
+MFR [g/ 10 min.]<br><input type="number" min=0 step="0.1" id="mfr_new"><br><br>
+Fibers/Fillers [%]<br><input type="number" id="fib_new" min=0 step=5><br><br>
+</div>
+
+<button onclick="UserInput()">Create New Part Array</button><br><br>
+
+<h2 id="Visualization">Visualization</h2>
+<p>Click the button to create a 3D scatter plot of your new and old parts. Your old parts will appear in shades of red and the new part will be light gray. This plot visually indicates which old part is closest and most similiar to your current project.</p>
+<p>Please ensure that the gray point is surrounded by red points. While you can still use the service if the gray dot is an outlier, predicition accuracy can drastically decrease. Therefore it is recommended to enter different old parts, re-create the CSV and the plot until the gray dot is in the center.</p><br>
+
+<!-- Create Plot -->
+<button type="button" onclick="PlotParts()">(Re-)Plot Parts</button><br><br>
+
+<!-- Spaceholder (div) for Plot -->
+<div id="PartScatterPlot"></div>
+
+<h2 id="SheetCreation">Molding Sheet</h2>
+<p>Please find below your created old parts CSV and new part array. You need to add your e-mail address and agree to the general terms and conditions in order to receive your molding sheet. Submit all information and receive the molding sheet.</p>
+<p>For your convenience, you can copy and save the old part CSV to re-use it for your next predicition, but it is recommended to use different, more similiar parts to the most current project per predicition.</p><br>
+
+<!-- Hide send confirmation with hidden iframe-->
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" width="0" height="0" tabindex="-1" title="empty"></iframe>
+    
+
+<!-- Forward order form to Google Cloud Platform / Drive -->
+<form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfxMxivKFrdoYViSsfzcv2Mb3JXdVl0am56-zX1mBHKnkiCjw/formResponse" method="post" target="hidden_iframe";>
+
+<!-- order form content-->
+<label>E-Mail</label><br><input type="email" required size=24 name="entry.1612017441"><br>
+<label>CSV</label><br><textarea id="CSV" rows="20" cols="25" required name="entry.1042882814"></textarea><br>
+<label>Array (User Input)</label><br><input type="text" size=24 id="InputCSV" required name="entry.1032610544"><br>
+<label>Language</label><br><select required name="entry.1226274396"><option value="ENG">ENG</option><option value="TR">TR</option></select><br><br>
+<input type="checkbox" required id="agreement" name="agreement" value="agreement">
+<label for="agreement">I agree to <a href="https://mustermind.de/terms" target="_blank">the general terms and conditions</a> and <a href="https://mustermind.de/privacy-policy" target="_blank">the data privacy policy</a>.</label><br>
+
+<br><button type="submit" onclick="setTimeout(Preview, 300000)">Submit</button>
+</form>
+
+<h2 id="ResultPreview">Preview</h2>
+<p>Your data will immediately be processed upon submission. It can take up to 5 minutes for the preview to be shown. Do not refresh your browser, it will update automatically. In the meantime, you will receive a copy of your molding sheet via e-mail. Please check your inbox.</p><br>
+
+<!-- iframe for Preview -->
+<div id="Preview"></div>
+
+<h2 id="Feedback">Feedback</h2>	
+ <p>To report bugs, give a feedback or comment on and vote for other users' feedback, visit <a href="https://mustermind.convas.io/" target="_blank">mustermind.convas.io</a>.</p>
+	
+</div>
+
+<script>
+
+// Create CSV
+function NewCSV() {
+    wt_minArr = [];
+    wt_avgArr = [];
+	wt_maxArr = [];
+    A_projArr = [];
+    volArr = [];
+    no_gateArr = [];
+    l_flowArr = [];
+    d_gateArr = [];
+    mfrArr = [];
+    t_injArr = [];
+    T_meltArr = [];
+    T_moldArr = [];
+    F_clampArr = [];
+    p_injArr = [];
+    p_packArr = [];
+    t_packArr = [];
+    t_coolArr = [];
+    t_cycleArr = [];
+    mat_Arr = [];
+    fib_Arr = [];
+    for (var i = 0; i < 5; i++) {
+    wt_minArr[i] = Math.round(document.getElementById('wt_min'+(i+1)).value*100);
+    wt_avgArr[i] = Math.round(document.getElementById('wt_avg'+(i+1)).value*100);
+    wt_maxArr[i] = Math.round(document.getElementById('wt_max'+(i+1)).value*100);
+    A_projArr[i] = Math.round(document.getElementById('A_proj'+(i+1)).value*100);
+    volArr[i] = Math.round(document.getElementById('vol'+(i+1)).value*100);
+    no_gateArr[i] = Math.round(document.getElementById('no_gate'+(i+1)).value*100);
+    l_flowArr[i] = Math.round(document.getElementById('l_flow'+(i+1)).value*100);
+    d_gateArr[i] = Math.round(document.getElementById('d_gate'+(i+1)).value*100);
+    mfrArr[i] = Math.round(document.getElementById('mfr'+(i+1)).value*100);
+    t_injArr[i] = Math.round(document.getElementById('t_inj'+(i+1)).value*100);
+    T_meltArr[i] = Math.round(document.getElementById('T_melt'+(i+1)).value*100);
+    T_moldArr[i] = Math.round(document.getElementById('T_mold'+(i+1)).value*100);
+    F_clampArr[i] = Math.round(document.getElementById('F_clamp'+(i+1)).value*100);
+    p_injArr[i] = Math.round(document.getElementById('p_inj'+(i+1)).value*100);
+	p_packArr[i] = Math.round(document.getElementById('p_pack'+(i+1)).value*100);
+	t_packArr[i] = Math.round(document.getElementById('t_pack'+(i+1)).value*100);
+	t_coolArr[i] = Math.round(document.getElementById('t_cool'+(i+1)).value*100);
+	t_cycleArr[i] = Math.round(document.getElementById('t_cycle'+(i+1)).value*100);
+    mat_Arr[i] = document.getElementById('mat'+(i+1)).value;
+    fib_Arr[i] = Math.round(document.getElementById('fib'+(i+1)).value*100);
+    };
+	document.getElementById("CSV").innerHTML =
+    	wt_minArr + ";" + "\n" +
+        wt_avgArr + ";" + "\n" +
+        wt_maxArr + ";" + "\n" +
+        A_projArr + ";" + "\n" +
+        volArr + ";" + "\n" +
+        no_gateArr + ";" + "\n" +
+        l_flowArr + ";" + "\n" +
+        d_gateArr + ";" + "\n" +
+        mfrArr + ";" + "\n" +        
+        t_injArr + ";" + "\n" +
+    	T_meltArr + ";" + "\n" +
+    	T_moldArr + ";" + "\n" +
+		F_clampArr + ";" + "\n" +
+		p_injArr + ";" + "\n" +
+		p_packArr + ";" + "\n" +
+		t_packArr + ";" + "\n" +
+		t_coolArr + ";" + "\n" +
+		t_cycleArr + ";" + "\n" +
+        mat_Arr + ";" + "\n" +
+        fib_Arr + ";";
+}
+
+// Plot created CSV
+function PlotParts() {
+    wt_avgArr = [];
+    volArr = [];
+    l_flowArr = [];
+    for (var i = 0; i < 5; i++) {
+    wt_avgArr[i] = document.getElementById('wt_avg'+(i+1)).value*100;
+    volArr[i] = document.getElementById('vol'+(i+1)).value*100;
+    l_flowArr[i] = document.getElementById('l_flow'+(i+1)).value*100;
+    };
+    wt_newPlot = document.getElementById('wt_avg_new').value*100;
+    vol_newPlot = document.getElementById('vol_new').value*100;
+    lflow_newPlot = document.getElementById('l_flow_new').value*100;
+
+ /* Part traces (no for loops due to different color shades) */
+  var part1 = {
+    x : [wt_avgArr[0]],
+    y: [volArr[0]],
+    z : [l_flowArr[0]],
+    mode: 'markers',
+    marker: {
+      size: 12,
+       color: 'rgb(229, 90, 97)',
+      line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+      },
+      opacity: 0.8
+    },
+    type: 'scatter3d',
+    name: 'Eski Parça 1'
+  };
+
+  var part2 = {
+    x : [wt_avgArr[1]],
+    y: [volArr[1]],
+    z : [l_flowArr[1]],
+    mode: 'markers',
+    marker: {
+      size: 12,
+       color: 'rgb(208, 48, 56)',
+      line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+      },
+      opacity: 0.8
+    },
+    type: 'scatter3d',
+    name: 'Eski Parça 2'
+  };
+
+  var part3 = {
+    x : [wt_avgArr[2]],
+    y: [volArr[2]],
+    z : [l_flowArr[2]],
+    mode: 'markers',
+    marker: {
+      size: 12,
+       color: 'rgb(171, 22, 29)',
+      line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+      },
+       mode : 'markers',
+      opacity: 0.8
+    },
+    type: 'scatter3d',
+    name: 'Eski Parça 3'
+  };
+
+  var part4 = {
+    x : [wt_avgArr[3]],
+    y: [volArr[3]],
+    z : [l_flowArr[3]],
+    mode: 'markers',
+    marker: {
+      size: 12,
+       color: 'rgb(138, 1, 8)',
+      line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+      },
+      opacity: 0.8
+    },
+    type: 'scatter3d',
+    name: 'Eski Parça 4'
+  };
+
+  var part5 = {
+    x : [wt_avgArr[4]],
+    y: [volArr[4]],
+    z : [l_flowArr[4]],
+    mode: 'markers',
+    marker: {
+      size: 12,
+      color: 'rgb(96, 0, 5)',
+      line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+      },
+      opacity: 0.8
+    },
+    type: 'scatter3d',
+    name: 'Eski Parça 5'
+  };
+  
+    var newpart = {
+    x : [wt_newPlot],
+    y: [vol_newPlot],
+    z : [lflow_newPlot],
+    mode: 'markers',
+    marker: {
+      size: 12,
+      color: 'rgb(195, 195, 195)',
+      line: {
+        color: 'rgba(217, 217, 217, 0.14)',
+        width: 0.5
+      },
+      opacity: 0.8
+    },
+    type: 'scatter3d',
+    name: 'Yeni Parça'
+  };
+
+
+  /* Definition of data (parts), layout to use for plotting */
+  var parts = [part1, part2, part3, part4, part5, newpart];
+  var layout = {
+      scene: {
+          xaxis:{title: 'Avg. wall thickness (x)'},
+          yaxis:{title: 'Volume (y)'},
+          zaxis:{title: 'Max. flow length (z)'},
+          },
+      autosize: true,
+      margin: {
+       l: 0,
+       r: 0,
+       b: 0,
+       t: 0,
+       pad: 15
+      },
+  }
+	Plotly.newPlot('PartScatterPlot', parts, layout);
+}
+
+
+// Create user input csv
+function UserInput() {
+	var wt_min_new = Math.round(document.getElementById("wt_min_new").value*100);
+	var wt_avg_new = Math.round(document.getElementById("wt_avg_new").value*100);
+	var wt_max_new = Math.round(document.getElementById("wt_max_new").value*100);
+	var A_proj_new = Math.round(document.getElementById("A_proj_new").value*100);
+	var vol_new = Math.round(document.getElementById("vol_new").value*100);
+	var no_gate_new = Math.round(document.getElementById("no_gate_new").value*100);
+	var l_flow_new = Math.round(document.getElementById("l_flow_new").value*100);
+	var d_gate_new = Math.round(document.getElementById("d_gate_new").value*100);
+    var mfr_new = Math.round(document.getElementById("mfr_new").value*100);
+    var mat_new = document.getElementById("mat_new").value;
+    var fib_new = Math.round(document.getElementById("fib_new").value*100);
+
+	var InputCSV = wt_min_new + "," + wt_avg_new + "," + wt_max_new + "," + A_proj_new + "," + vol_new + "," + no_gate_new + "," + l_flow_new + "," + d_gate_new + "," + mfr_new + "," + mat_new + "," + fib_new;
+	document.getElementById("InputCSV").value = InputCSV;
+}
+
+// Preview
+function Preview() {
+  document.getElementById("Preview").innerHTML = "<iframe src=\"https://docs.google.com/spreadsheets/d/e/2PACX-1vRn8XAgv1ZTTB1eh07puzoBMr4lk4VCSOuMh_FpwIon5jN5qf4WOM_qnQxZENSEr85dIPtveol9_GLS/pubhtml?gid=758284375&&headers=false&chrome=false&widget=false&range=B1:G44\" width=\"600\" height=\"1080\" frameborder=\"0\"></iframe>";
+}
+
+</script>
+</body>
+</html>
