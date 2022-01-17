@@ -23,5 +23,7 @@ button {
  }
  ````  
    
+This source code was edited for mustermind partner Brightworks Engineering in Turkey (BWETR).
+   
 ## Notice
 Version 0.1. is deprecated. Please refer to the [latest version's README](https://github.com/mustermind/mustermind-beta/blob/main/README.md) for more details.
