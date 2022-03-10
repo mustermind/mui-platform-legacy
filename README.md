@@ -5,9 +5,8 @@ Brightworks Mühendislik Sanayi ve Ticaret Limited Şirketi
 (hereinafter “Brightworks Engineering”)
 
 ## Business/Postal Address and Contact Information
-
-Şekerpınar Mah. Tepeören Cad. No:18 İç Kapı No: 41 
-Çayırova / Kocaeli / Türkiye
+Şekerpınar Mah. Tepeören Cad. No:18 İç Kapı No: 41  
+Çayırova / Kocaeli / Türkiye  
 info(at)bwetr.com  
  
 ## Registry (MERSIS) and VAT ID no.:
