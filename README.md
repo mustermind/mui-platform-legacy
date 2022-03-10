@@ -1,13 +1,13 @@
 **Last updated:** March 22
 # Terms
 This web application and services (hereinafter “brightmind”) are provided by:  
-Brightworks Mühendislik San. Ve Tic. Ltd. Şti.  
+Brightworks Mühendislik Sanayi ve Ticaret Limited Şirketi  
 (hereinafter “Brightworks Engineering”)
 
 ## Business/Postal Address and Contact Information
-Tuzla Plus Sanayi No:18/41  
-Şekerpınar Mh Tepeören Cd. 41420  
-Çayırova / Kocaeli / Türkiye  
+
+Şekerpınar Mah. Tepeören Cad. No:18 İç Kapı No: 41 
+Çayırova / Kocaeli / Türkiye
 info(at)bwetr.com  
  
 ## Registry (MERSIS) and VAT ID no.:
