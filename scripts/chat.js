@@ -60,7 +60,7 @@ recognition.onresult = function(event) {
     spokenText = spokenText.replace(/\b(punkt|komma)\b/g, ".");
 
     // Extract full number including decimals
-    let numbers = spokenText.match(/\d+([.,]\d+)?/g);
+    let numbers = spokenText.match(/(\d+)([.,]\d+)?/g)
 
     if (numbers && numbers.length > 0) {
         let extractedNumber = numbers.join("");  // Join parts if necessary
