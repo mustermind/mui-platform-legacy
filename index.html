@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="chat.css">
+    </head>
+    <body>
+        <div class="chat-header">
+            <button id="mute-button" onclick="toggleMute()">🔇</button>
+        </div>        
+        <div class="chat-container">
+            <div id="response0" class="introduction">
+                Hi, ich bin Beverly, deine Spritzgussassistentin.<br>
+                Lass uns gemeinsam dein Bauteil genauer anschauen: Bitte nenne mir als erstes die durchschnittliche Wandstärke deines Bauteils in mm.
+            </div>
+            <div id="message1" class="message sent"></div>
+            <div id="response1" class="message received">
+                Wie dick ist die stärkste Stelle in mm?
+            </div>
+            <div id="message2" class="message sent"></div>
+            <div id="response2" class="message received">
+                Und die dünnste Stelle? Vergiss hierbei bitte nicht Rippen, Stege, Scharniere oder ähnliches.
+            </div>
+            <div id="message3" class="message sent"></div>
+            <div id="response3" class="message received">
+                Welches Gesamtvolumen (in ccm) ergibt sich aus der Wandstärkenverteilung deines Bauteils?
+            </div>
+            <div id="message4" class="message sent"></div>
+            <div id="response4" class="message received">
+                Kommen wir nun zur Werkzeugauslegung: Welche projizierte Fläche (in qcm) ergibt sich im Werkzeug für dein Bauteil?
+            </div>
+            <div id="message5" class="message sent"></div>
+            <div id="response5" class="message received">
+                Und wieviele Anspritzpunkte sind dafür geplant?
+            </div>
+            <div id="message6" class="message sent"></div>
+            <div id="response6" class="message received">
+                Was ist der längste Fließweg in mm, der sich daraus ergibt?
+            </div>
+            <div id="message7" class="message sent"></div>
+            <div id="response7" class="message received">
+                Fast geschafft! Nun nur noch das verwendete Material: Welcher MFR wurde für das Material gemessen?
+            </div>
+            <div id="message8" class="message sent"></div>
+            <div id="response8" class="message received">
+                Bitte nenne mir abschließend den Faser- oder Füllstoffgehalt des Materials in Prozent.<br>
+                Antworte 0 für ungefülltes Material.
+            </div>
+            <div id="message9" class="message sent"></div>
+            <div id="response9" class="message received">
+                Kannst du mir noch eine E-Mail-Adresse nennen, an die ich das Spritzgussprotokoll senden soll?
+                Tippe diese ein und bestätige sie, indem du auf Senden klickst.
+            </div>
+            <div class="message sent" id="message10"></div>
+            <div id="response10" class="message received">
+                Vielen Dank! Ich werde das Protokoll nun erstellen und dir zukommen lassen.<br>
+                War mir ein Vergnügen.<br>
+                Bis zum nächsten Mal.
+            </div>
+            <div class="input-container">
+                <input type="number" id="message-input" placeholder="Type your answer in numbers...">
+                <button id="send-button" onclick="sendMessage()">&#8618;</button>
+                <button id="record-button" class="record-button">&#128172;</button>
+            </div>
+        </div>
+        <script type = "text/javascript" src="scripts/chat.js"></script>
+    </body>
+</html>
