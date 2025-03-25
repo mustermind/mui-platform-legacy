@@ -111,7 +111,17 @@ button {
 }
 
 .hidden {
-    display: none;
+    display: none !important;  /* Ensures elements are completely hidden */
+}
+
+#hidden_iframe {
+    display: none !important;
     width: 0;
     height: 0;
+    visibility: hidden;
+}
+
+form input[type="text"], 
+form input[type="email"] {
+    display: none !important;
 }
