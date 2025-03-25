@@ -42,6 +42,7 @@ document.getElementById('message-input').addEventListener('keypress', function (
     }
 });
 
+/* ALL AUDIO IN- AND OUTPUT FUNCTIONS DEACTIVATED UNTIL PROPERLY TESTED */
 document.getElementById("record-button").addEventListener("click", function() {
 if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
     alert("Ihr Browser unterstützt keine Spracherkennung.");
