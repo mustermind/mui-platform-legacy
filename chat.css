@@ -110,12 +110,8 @@ button {
     font-size: 16px;
 }
 
-.hidden_iframe {
+.hidden {
     display: none;
     width: 0;
     height: 0;
-}
-
-.hidden_input {
-    display: none;
 }
