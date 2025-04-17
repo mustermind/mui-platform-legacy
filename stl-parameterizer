@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STL Analyzer</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        #output { white-space: pre; background: #f0f0f0; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>STL Analyzer</h2>
+    <input type="file" id="fileInput" accept=".stl">
+    <pre id="output">Upload an STL file...</pre>
+
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js';
+        import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.164.0/examples/jsm/loaders/STLLoader.js';
+
+        let scene = new THREE.Scene();
+        let mesh;
+
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const contents = e.target.result;
+
+                const loader = new STLLoader();
+                const geometry = loader.parse(contents);
+                geometry.computeVertexNormals();
+                geometry.computeBoundingBox();
+
+                const material = new THREE.MeshNormalMaterial();
+                mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+
+                const box = geometry.boundingBox;
+                const width = box.max.x - box.min.x;
+                const height = box.max.y - box.min.y;
+                const depth = box.max.z - box.min.z;
+
+                const volume = computeMeshVolume(geometry);
+
+                const areaXY = computeProjectedArea(geometry, 'XY');
+                const areaXZ = computeProjectedArea(geometry, 'XZ');
+                const areaYZ = computeProjectedArea(geometry, 'YZ');
+
+                computeWallThicknessStats(geometry, mesh).then(stats => {
+                    const output = `
+Dimensions:
+  Width: ${width.toFixed(3)}
+  Height: ${height.toFixed(3)}
+  Depth: ${depth.toFixed(3)}
+
+Volume:
+  ${volume.toFixed(3)} cubic units
+
+Projected Areas:
+  XY Plane: ${areaXY.toFixed(3)}
+  XZ Plane: ${areaXZ.toFixed(3)}
+  YZ Plane: ${areaYZ.toFixed(3)}
+
+Wall Thickness (Raycast Approx):
+  Min: ${stats.min.toFixed(3)}
+  Max: ${stats.max.toFixed(3)}
+  Avg: ${stats.avg.toFixed(3)}
+`;
+                    document.getElementById('output').textContent = output;
+                });
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+
+        function computeMeshVolume(geometry) {
+            let position = geometry.getAttribute('position');
+            let volume = 0;
+
+            for (let i = 0; i < position.count; i += 3) {
+                const p1 = new THREE.Vector3().fromBufferAttribute(position, i);
+                const p2 = new THREE.Vector3().fromBufferAttribute(position, i + 1);
+                const p3 = new THREE.Vector3().fromBufferAttribute(position, i + 2);
+                volume += p1.dot(p2.cross(p3)) / 6;
+            }
+
+            return Math.abs(volume);
+        }
+
+        function computeProjectedArea(geometry, plane = 'XY') {
+            let position = geometry.getAttribute('position');
+            let totalArea = 0;
+
+            for (let i = 0; i < position.count; i += 3) {
+                let p1 = new THREE.Vector3().fromBufferAttribute(position, i);
+                let p2 = new THREE.Vector3().fromBufferAttribute(position, i + 1);
+                let p3 = new THREE.Vector3().fromBufferAttribute(position, i + 2);
+
+                if (plane === 'XY') { p1.z = p2.z = p3.z = 0; }
+                if (plane === 'XZ') { p1.y = p2.y = p3.y = 0; }
+                if (plane === 'YZ') { p1.x = p2.x = p3.x = 0; }
+
+                totalArea += triangle2DArea(p1, p2, p3);
+            }
+
+            return totalArea;
+        }
+
+        function triangle2DArea(p1, p2, p3) {
+            return Math.abs((p1.x * (p2.y - p3.y) +
+                             p2.x * (p3.y - p1.y) +
+                             p3.x * (p1.y - p2.y)) / 2);
+        }
+
+        async function computeWallThicknessStats(geometry, mesh) {
+            const raycaster = new THREE.Raycaster();
+            const position = geometry.getAttribute('position');
+            const normal = geometry.getAttribute('normal');
+
+            let thicknesses = [];
+
+            for (let i = 0; i < position.count; i += Math.floor(position.count / 1000)) {
+                let p = new THREE.Vector3().fromBufferAttribute(position, i);
+                let n = new THREE.Vector3().fromBufferAttribute(normal, i).normalize();
+
+                raycaster.set(p, n);
+                const hits = raycaster.intersectObject(mesh, true);
+
+                if (hits.length > 1) {
+                    thicknesses.push(hits[1].distance);
+                }
+            }
+
+            const min = Math.min(...thicknesses);
+            const max = Math.max(...thicknesses);
+            const avg = thicknesses.reduce((a, b) => a + b, 0) / thicknesses.length;
+
+            return { min, max, avg };
+        }
+    </script>
+</body>
+</html>
