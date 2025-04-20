@@ -13,51 +13,53 @@
         -->        
         <div class="chat-container">
             <div id="response0" class="introduction">
-                Hi, ich bin mustermind, dein KI-Assistent für die Angebotserstellung und Kalkulation von Spritzgießwerkzeugen.<br>
-                Lass uns gemeinsam dein Bauteil genauer anschauen: Bitte nenne mir als erstes die durchschnittliche Wandstärke deines Bauteils in mm.
+                Ich bin der mustermind AI Tool Tender Tipster, dein KI-Assistent für die Kalkulation und Angebotserstellung von Spritzgießwerkzeugen.<br>
+                Nenne mir zunächst das Volumen des angefragten Artikels in Kubikzentimetern. Damit legen wir den Werkzeugtyp (und die -größe) fest.
             </div>
             <div id="message1" class="message sent"></div>
             <div id="response1" class="message received">
-                Wie dick ist die stärkste Stelle in mm?
+                Danke. Schauen wir als nächstes auf die einzelnen Maße des Bauteils beginnend mit der Länge - der längsten Seite - in mm.<br>
+                Diese bestimmt die Anzahl (und Position) der Anspritzpunkte und somit die resultierenden Fließwege.
             </div>
             <div id="message2" class="message sent"></div>
             <div id="response2" class="message received">
-                Und die dünnste Stelle? Vergiss hierbei bitte nicht Rippen, Stege, Scharniere oder ähnliches.
+                Und die Breite (ebenfalls in mm)?
             </div>
             <div id="message3" class="message sent"></div>
             <div id="response3" class="message received">
-                Welches Gesamtvolumen (in ccm) ergibt sich aus der Wandstärkenverteilung deines Bauteils?
+                Und zu guter letzt die Höhe bzw. Tiefe in mm?
             </div>
             <div id="message4" class="message sent"></div>
             <div id="response4" class="message received">
-                Welche voraussichtliche projizierte Fläche (in qcm) wird sich im Werkzeug für dein Bauteil ergeben?
+                Prima. Kannst du mir auch schon die projizierte Fläche in der Trennebene in Quadratzentimetern nennen?<br>
+                Falls nicht antworte mit 0 und ich berechne die maximale projizierte Fläche aus den vorangegangenen Maßen.
             </div>
             <div id="message5" class="message sent"></div>
             <div id="response5" class="message received">
-                Und wieviele Anspritzpunkte sind aktuell dafür eingeplant?
+                Nun die letzte Frage zur Bauteilgeometrie: Wie dick ist die (nominale) Wandstärke in mm?<br>
+                Sie wird unter anderem Auswirkungen auf den Einspritzdruck sowie die ideale Kühl- und damit Zykluszeit haben.
             </div>
             <div id="message6" class="message sent"></div>
             <div id="response6" class="message received">
-                Was wäre bei dieser Anzahl  der längste Fließweg in mm, der sich daraus ergibt?
+                Ich habe jetzt ein gutes Verständnis der Artikelgeometrie.<br>
+                Welche Oberflächengüte bzw. -rauigkeit (Ra in µm) ist gewünscht?
             </div>
             <div id="message7" class="message sent"></div>
             <div id="response7" class="message received">
-                Fast geschafft! Nun nur noch das verwendete Material: Welcher MFR wurde für das Material gemessen?
+                Und welche Toleranz ist in mm zulässig?
             </div>
             <div id="message8" class="message sent"></div>
             <div id="response8" class="message received">
-                Bitte nenne mir abschließend den Faser- oder Füllstoffgehalt des Materials in Prozent.<br>
-                Antworte 0 für ungefülltes Material.
+                Fast geschafft! Sage mir abschließend nur noch, wie viel Stück des Artikels mit dem Werkzeug hergestellt werden sollen?
             </div>
             <div id="message9" class="message sent"></div>
             <div id="response9" class="message received">
-                Kannst du mir noch eine E-Mail-Adresse nennen, an die ich das Spritzgussprotokoll senden soll?
+                Kannst du mir noch eine E-Mail-Adresse nennen, an die ich das Angebot zur Kontrolle senden soll?<br>
                 Tippe diese ein und bestätige sie, indem du auf Senden klickst.
             </div>
             <div class="message sent" id="message10"></div>
             <div id="response10" class="message received">
-                Leider ist es mir zur Zeit weder möglich, eine Werkzeugkalkulation geschweie dedir das Spritzgussprotokoll zu senden.<br>
-                Bitte komm später zurück und versuche es noch einmal. 
+                Leider ist es mir zur Zeit nicht möglich, ein Angebot zu versenden. Bitte komm später zurück und versuche es noch einmal. 
                 <!-- Original message:
                 Vielen Dank! Ich werde das Protokoll nun erstellen und dir zukommen lassen.<br>
                 War mir ein Vergnügen.<br>
@@ -70,7 +72,7 @@
                 <!-- Audio input removed until properly tested
                 <button id="record-button" class="record-button">&#128172;</button>
                  -->
-                <!-- Submit removed fully functional
+                <!-- Submit removed until fully functional
                  <iframe name="hidden_iframe" id="hidden_iframe" class="hidden" tabindex="-1" title="empty"></iframe>
                 <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfxMxivKFrdoYViSsfzcv2Mb3JXdVl0am56-zX1mBHKnkiCjw/formResponse" method="post" target="hidden_iframe">
                     <input type="text" required name="entry.1032610544" class="hidden">
