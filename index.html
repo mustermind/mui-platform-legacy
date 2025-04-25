@@ -52,15 +52,19 @@
             </div>
             <div id="message8" class="message sent"></div>
             <div id="response8" class="message received">
-                Fast geschafft! Sage mir abschließend nur noch, wie viel Stück des Artikels mit dem Werkzeug hergestellt werden sollen?
+                Fast geschafft! Sage mir noch, wie viel Stück des Artikels mit dem Werkzeug hergestellt werden sollen?
             </div>
             <div id="message9" class="message sent"></div>
             <div id="response9" class="message received">
+                Letzte Frage: Für welchen Kunststoff soll das Werkzeug ausgelegt werden?
+            </div>
+            <div id="message10" class="message sent"></div>
+            <div id="response10" class="message received">
                 Kannst du mir noch eine E-Mail-Adresse nennen, an die ich das Angebot zur Kontrolle senden soll?<br>
                 Tippe diese ein und bestätige sie, indem du auf Senden klickst.
             </div>
-            <div class="message sent" id="message10"></div>
-            <div id="response10" class="message received">
+            <div class="message sent" id="message11"></div>
+            <div id="response11" class="message received">
                 Leider ist es mir zur Zeit nicht möglich, ein Angebot zu versenden. Bitte komm später zurück und versuche es noch einmal. 
                 <!-- Original message:
                 Vielen Dank! Ich werde das Protokoll nun erstellen und dir zukommen lassen.<br>
@@ -70,6 +74,21 @@
             </div>
             <div class="input-container">
                 <input type="number" id="message-input" placeholder="Type your answer in numbers...">
+                <select name="material" id="material">
+                    <option value="PE-LD">PE-LD</option>
+                    <option value="PE">PE</option>
+                    <option value="PE-HD">PE-HD</option>
+                    <option value="PP">PP</option>
+                    <option value="ABS">ABS</option>
+                    <option value="PA6">PA6</option>
+                    <option value="PA66 GF30">PA66 GF30</option>
+                    <option value="PA12">PA12</option>
+                    <option value="PC">PC</option>
+                    <option value="POM">POM</option>
+                    <option value="PBT GF30">PBT GF30</option>
+                    <option value="PPS">PPS</option>
+                    <option value="LCP">LCP</option>
+                </select>
                 <button id="send-button" onclick="sendMessage()">&#8618;</button>
                 <!-- Audio input removed until properly tested
                 <button id="record-button" class="record-button">&#128172;</button>
@@ -81,7 +100,7 @@
                     <input type="email" required name="entry.1612017441" class="hidden">
                     <button type="submit" onclick="submitMessages()">Submit</button>
                 </form>
-            -->
+                -->
             </div>
         </div>
         <script type = "text/javascript" src="scripts/chat.js"></script>
