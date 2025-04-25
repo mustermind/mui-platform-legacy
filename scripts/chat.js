@@ -27,7 +27,7 @@ function sendMessage() {
 
     inputField.value = '';
 
-    if (messageCount === 10) {
+    if (messageCount === 9) {
         inputField.type = 'text'; 
         sendButton.textContent = 'Submit';
         sendButton.onclick = submitMessages();
