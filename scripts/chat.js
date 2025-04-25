@@ -27,11 +27,42 @@ function sendMessage() {
 
     inputField.value = '';
 
-     if (messageCount === 10) {
-        inputField.type = 'text'; /*works fine, but the following two do not seem to work yet */
-        sendButton.textContent = 'Submit';
-        sendButton.onclick = submitMessages();
-    }
+    if (messageCount === 10) {
+        inputField.style.display = 'none';
+        const dropdown = document.getElementById('material-select');
+        dropdown.classList.remove('hidden');
+    
+        sendButton.onclick = function () {
+            const selected = dropdown.value;
+            if (!selected || selected === '-- Bitte Material wählen --') return;
+    
+            messageCount++; // Jetzt 11
+            document.getElementById('message' + messageCount).textContent = selected;
+            document.getElementById('message' + messageCount).style.display = 'block';
+    
+            dropdown.classList.add('hidden');
+    
+            setTimeout(() => {
+                document.getElementById('response' + messageCount).style.display = 'block';
+                if (!isMuted) {
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    }
+                    currentAudio = new Audio(`audio/response${messageCount}.mp3`);
+                    currentAudio.play();
+                }
+            }, 500);
+    
+            // Input wieder anzeigen, nun als Textfeld
+            inputField.type = 'text';
+            inputField.style.display = 'block';
+    
+            // Rücksetzen der ursprünglichen Send-Logik
+            sendButton.textContent = '➲';
+            sendButton.onclick = sendMessage;
+        };
+    }    
 
 }
 
