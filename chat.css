@@ -109,7 +109,7 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
-
+/*
 .dropdown-input {
     flex: 1;
     padding: 10px;
@@ -126,6 +126,7 @@ button {
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+*/
 
 .hidden {
     display: none !important;  /* Ensures elements are completely hidden */
