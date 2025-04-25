@@ -4,7 +4,7 @@ function sendMessage() {
     let inputField = document.getElementById('message-input');
     let messageText = inputField.value.trim();
     let sendButton = document.querySelector('send-button');
-    if (messageText === "" || messageCount >= 12) return;
+    if (messageText === "" || messageCount >= 11) return;
 
     messageCount++;
 
@@ -27,7 +27,7 @@ function sendMessage() {
 
     inputField.value = '';
 
-    if (messageCount === 9) {
+    if (messageCount >= 8) {
         inputField.type = 'text'; 
         sendButton.textContent = 'Submit';
         sendButton.onclick = submitMessages();
