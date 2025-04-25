@@ -1,4 +1,5 @@
 let messageCount = 0;
+let userAnswers = [];
         
 function sendMessage() {
     let inputField = document.getElementById('message-input');
@@ -6,6 +7,8 @@ function sendMessage() {
     let sendButton = document.querySelector('send-button');
     if (messageText === "" || messageCount >= 11) return;
 
+    userAnswers.push(messageText);
+    console.log("Aktuelle Antworten:", userAnswers);
     messageCount++;
 
     // Show the next predefined message bubble and response
