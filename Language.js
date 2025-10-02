@@ -1,7 +1,7 @@
 function ChangeLanguage() {
     language = document.getElementById("Language").value;
     var TextArr = [
-    ["Legacy Parts Characterization","Eski Parça Karakterizasyonu"],
+    ["<i class="fas fa-file-upload icon"></i> Legacy Parts Characterization","<i class="fas fa-file-upload icon"></i> Eski Parça Karakterizasyonu"],
     ["New Part Characterization","Yeni Parça Karakterizasyonu"],
     ["Visualization","Görselleştirme"],
     ["Molding Sheet","Proses Ayar Fişi"],
