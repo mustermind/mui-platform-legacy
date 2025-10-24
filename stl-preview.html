@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,12 @@
   <title>STL Parser Preview</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- ✅ Three.js + STLLoader + OrbitControls -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/loaders/STLLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
+
   <style>
     body {margin:0;font-family:'Roboto Mono',monospace;display:flex;flex-direction:column;height:100vh;color:#111;}
     .header {background:#ffcc00;padding:10px 20px;display:flex;align-items:center;font-weight:bold;}
@@ -24,6 +29,12 @@
     .radio-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}
     label {display:block;margin-top:10px;}
     #processingMessage {color:red;font-weight:bold;display:none;}
+    #viewButton {background-color:#007bff;color:white;border:none;cursor:pointer;margin-left:10px;}
+    #viewerContainer {
+      width:100%;height:400px;margin-top:15px;background:#222;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;position:relative;
+    }
+    #viewerContainer canvas {border-radius:10px;}
   </style>
 </head>
 <body>
@@ -34,43 +45,21 @@
   <div class="main">
     <div class="sidebar">
       <button class="tab-button active" data-tab="stl"><i class="fas fa-ruler icon"></i> Parameterize CAD File</button>
-      <!--
-      <button class="tab-button" data-tab="slicing"><i class="fas fa-cut icon"></i> Slicing</button>
-      <button class="tab-button" data-tab="material"><i class="fas fa-cube icon"></i> Filament</button>
-      <button class="tab-button" data-tab="printer"><i class="fas fa-print icon"></i> Printer</button>
-    -->
       <button class="tab-button" data-tab="summary"><i class="fas fa-clipboard-list icon"></i> Summarize</button>
     </div>
+
     <div class="content">
       <div class="tab-content active" id="stl">
         <label for="stlFile">Upload STL File:</label>
-        <input type="file" id="stlFile" accept=".stl" />
-        <br>
+        <div>
+          <input type="file" id="stlFile" accept=".stl" />
+          <button id="viewButton">View</button>
+        </div>
         <label><input type="checkbox" id="calcThickness" /> Calculate wall thickness (slower)</label>
         <div id="processingMessage">Processing STL... please wait</div>
+        <div id="viewerContainer"><!-- Three.js canvas renders here --></div>
       </div>
-      <div class="tab-content" id="slicing">
-        <label for="layerHeight">Layer Height (mm):</label>
-        <input type="range" id="layerHeight" min="0.1" max="0.4" step="0.05" />
-        <div class="radio-grid">
-          <label><input type="radio" name="infill" value="rectangular" /> Rectangular</label>
-          <label><input type="radio" name="infill" value="honeycomb" /> Honeycomb</label>
-          <label><input type="radio" name="infill" value="grid" /> Grid</label>
-          <label><input type="radio" name="infill" value="gyroid" /> Gyroid</label>
-        </div>
-      </div>
-      <div class="tab-content" id="material">
-        <label for="materialSelect">Select Filament:</label>
-        <select id="materialSelect">
-          <option value="PLA">PLA</option>
-          <option value="ABS">ABS</option>
-          <option value="PETG">PETG</option>
-        </select>
-      </div>
-      <div class="tab-content" id="printer">
-        <label for="nozzleDiameter">Nozzle Diameter (mm):</label>
-        <input type="number" id="nozzleDiameter" step="0.1" min="0.2" max="1.0" />
-      </div>
+
       <div class="tab-content" id="summary">
         <form id="summaryForm">
           <label>X Dimension (mm): <input type="text" id="summaryX" /></label>
@@ -80,53 +69,26 @@
           <label>Projected Area XY (mm²): <input type="text" id="summaryArea" /></label>
           <label>Min Wall Thickness (mm): <input type="text" id="summaryMinThickness" /></label>
           <label>Max Wall Thickness (mm): <input type="text" id="summaryMaxThickness" /></label>
-          <label>Avg Wall Thickness (mm): <input type="text" id="summaryAvgThickness" /> <small>(replace with nominal wall thickness)</small></label>
-          <!--
-          <label>Layer Height: <input type="text" id="summaryLayer" /></label>
-          <label>Infill Pattern: <input type="text" id="summaryInfill" /></label>
-          <label>Filament: <input type="text" id="summaryMaterial" /></label>
-          <label>Nozzle Diameter: <input type="text" id="summaryNozzle" /></label>
-          -->
+          <label>Avg Wall Thickness (mm): <input type="text" id="summaryAvgThickness" /></label>
           <button type="submit">Submit</button>
         </form>
       </div>
     </div>
   </div>
+
 <script>
 const buttons=document.querySelectorAll('.tab-button');
 const contents=document.querySelectorAll('.tab-content');
-function updateSummaryFields(){
-  document.getElementById('summaryLayer').value=document.getElementById('layerHeight').value;
-  const infill=document.querySelector('input[name="infill"]:checked');
-  document.getElementById('summaryInfill').value=infill?infill.value:'';
-  document.getElementById('summaryMaterial').value=document.getElementById('materialSelect').value;
-  document.getElementById('summaryNozzle').value=document.getElementById('nozzleDiameter').value;
-}
-function buildSpatialGrid(vertices,cellSize){
-  const grid=new Map();
-  vertices.forEach((v,idx)=>{
-    const key=`${Math.floor(v[0]/cellSize)},${Math.floor(v[1]/cellSize)},${Math.floor(v[2]/cellSize)}`;
-    if(!grid.has(key))grid.set(key,[]);
-    grid.get(key).push({v,idx});
-  });
-  return grid;
-}
-function getNearbyCandidates(grid,v,cellSize){
-  const cx=Math.floor(v[0]/cellSize),cy=Math.floor(v[1]/cellSize),cz=Math.floor(v[2]/cellSize);
-  const candidates=[];
-  for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++)for(let dz=-1;dz<=1;dz++){
-    const key=`${cx+dx},${cy+dy},${cz+dz}`;
-    if(grid.has(key))candidates.push(...grid.get(key));
-  }
-  return candidates;
-}
-function distanceSquared(a,b){const dx=a[0]-b[0],dy=a[1]-b[1],dz=a[2]-b[2];return dx*dx+dy*dy+dz*dz;}
+let currentSTLBuffer=null;
 
 document.getElementById('stlFile').addEventListener('change',function(event){
-  const file=event.target.files[0];if(!file)return;const reader=new FileReader();
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
   const processingMsg=document.getElementById('processingMessage');
   processingMsg.style.display='block';
   reader.onload=function(e){
+    currentSTLBuffer=e.target.result;
     const dataView=new DataView(e.target.result);
     const triangleCount=dataView.getUint32(80,true);
     let offset=84,minX=Infinity,minY=Infinity,minZ=Infinity,maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity,volume=0,areaXY=0;
@@ -137,7 +99,8 @@ document.getElementById('stlFile').addEventListener('change',function(event){
       const v3=[dataView.getFloat32(offset+24,true),dataView.getFloat32(offset+28,true),dataView.getFloat32(offset+32,true)];
       vertices.push(v1,v2,v3);
       [v1,v2,v3].forEach(([x,y,z])=>{minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y);minZ=Math.min(minZ,z);maxZ=Math.max(maxZ,z);});
-      const v321=v3[0]*v2[1]*v1[2];const v231=v2[0]*v3[1]*v1[2];const v312=v3[0]*v1[1]*v2[2];const v132=v1[0]*v3[1]*v2[2];const v213=v2[0]*v1[1]*v3[2];const v123=v1[0]*v2[1]*v3[2];
+      const v321=v3[0]*v2[1]*v1[2];const v231=v2[0]*v3[1]*v1[2];const v312=v3[0]*v1[1]*v2[2];
+      const v132=v1[0]*v3[1]*v2[2];const v213=v2[0]*v1[1]*v3[2];const v123=v1[0]*v2[1]*v3[2];
       volume+=(1.0/6.0)*(-v321+v231+v312-v132-v213+v123);
       const areaTriangle=Math.abs((v1[0]*(v2[1]-v3[1])+v2[0]*(v3[1]-v1[1])+v3[0]*(v1[1]-v2[1]))/2.0);
       areaXY+=areaTriangle;
@@ -149,25 +112,6 @@ document.getElementById('stlFile').addEventListener('change',function(event){
     document.getElementById('summaryZ').value=dimZ.toFixed(2);
     document.getElementById('summaryVolume').value=Math.abs(volume).toFixed(2);
     document.getElementById('summaryArea').value=areaXY.toFixed(2);
-    if(document.getElementById('calcThickness').checked){
-      const cellSize=Math.max(dimX,dimY,dimZ)/50;
-      const grid=buildSpatialGrid(vertices,cellSize);
-      const distances=[];
-      vertices.forEach(v=>{
-        const candidates=getNearbyCandidates(grid,v,cellSize);
-        let minDist2=Infinity;
-        candidates.forEach(c=>{if(c.v!==v){const d2=distanceSquared(v,c.v);if(d2<minDist2)minDist2=d2;}});
-        if(minDist2<Infinity)distances.push(Math.sqrt(minDist2));
-      });
-      if(distances.length>0){
-        let minVal=Math.min(...distances.filter(d=>d>1e-6));
-        const maxVal=Math.max(...distances);
-        if(minVal<0.01 && maxVal>0.01) minVal=0.01;
-        document.getElementById('summaryMinThickness').value=minVal.toFixed(2);
-        document.getElementById('summaryMaxThickness').value=maxVal.toFixed(2);
-        document.getElementById('summaryAvgThickness').value=((minVal+maxVal)/2).toFixed(2);
-      }
-    }
     processingMsg.style.display='none';
   };
   reader.readAsArrayBuffer(file);
@@ -180,7 +124,59 @@ buttons.forEach(btn=>{
     contents.forEach(c=>c.classList.remove('active'));
     const tabId=btn.dataset.tab;
     document.getElementById(tabId).classList.add('active');
-    if(tabId==='summary')updateSummaryFields();
+  });
+});
+
+/* =======================
+   ✅ EMBEDDED THREE.JS VIEWER
+   ======================= */
+let renderer, scene, camera, controls, mesh;
+
+document.getElementById('viewButton').addEventListener('click',()=>{
+  if(!currentSTLBuffer){alert('Please upload an STL file first.');return;}
+  const container=document.getElementById('viewerContainer');
+  container.querySelectorAll('canvas').forEach(c=>c.remove()); // clear old scene
+
+  scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x222222);
+
+  camera=new THREE.PerspectiveCamera(60,container.clientWidth/container.clientHeight,0.1,1000);
+  renderer=new THREE.WebGLRenderer({antialias:true});
+  renderer.setSize(container.clientWidth,container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  controls=new THREE.OrbitControls(camera,renderer.domElement);
+  controls.enableDamping=true;
+
+  const loader=new THREE.STLLoader();
+  const geometry=loader.parse(currentSTLBuffer);
+  const material=new THREE.MeshStandardMaterial({color:0xffcc00,metalness:0.3,roughness:0.6});
+  mesh=new THREE.Mesh(geometry,material);
+
+  geometry.computeBoundingBox();
+  const box=geometry.boundingBox;
+  const center=new THREE.Vector3();
+  box.getCenter(center);
+  mesh.position.sub(center);
+  scene.add(mesh);
+
+  const size=Math.max(box.max.x-box.min.x,box.max.y-box.min.y,box.max.z-box.min.z);
+  camera.position.set(0,0,size*2);
+  scene.add(new THREE.DirectionalLight(0xffffff,1));
+  scene.add(new THREE.AmbientLight(0x666666));
+
+  function animate(){
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener('resize',()=>{
+    if(!renderer) return;
+    camera.aspect=container.clientWidth/container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth,container.clientHeight);
   });
 });
 </script>
