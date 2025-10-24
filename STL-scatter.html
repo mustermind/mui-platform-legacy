@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STL Viewer (Plotly)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <style>
+    body {margin:0;font-family:'Roboto Mono',monospace;display:flex;flex-direction:column;align-items:center;padding:20px;}
+    #plot {width:90%;height:80vh;border:1px solid #ccc;border-radius:10px;}
+    input,button {font-family:'Roboto Mono',monospace;margin:10px;padding:10px;font-size:16px;border-radius:5px;border:1px solid #ccc;}
+    button {background:#007bff;color:white;border:none;cursor:pointer;}
+    button:hover {background:#0056b3;}
+  </style>
+</head>
+<body>
+  <h2>STL 3D Viewer (Plotly)</h2>
+  <input type="file" id="stlFile" accept=".stl" />
+  <button id="viewButton">View</button>
+  <div id="plot">Upload a file and click “View”</div>
+
+  <script>
+  let currentSTLBuffer = null;
+
+  document.getElementById('stlFile').addEventListener('change', event => {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      currentSTLBuffer = e.target.result;
+      console.log("STL file loaded:", file.name);
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  document.getElementById('viewButton').addEventListener('click', () => {
+    if (!currentSTLBuffer) {
+      alert('Please upload an STL file first.');
+      return;
+    }
+    const points = parseSTL(currentSTLBuffer);
+    plotPoints(points);
+  });
+
+  // === STL PARSER (supports binary and ASCII) ===
+  function parseSTL(buffer) {
+    const view = new DataView(buffer);
+    const decoder = new TextDecoder();
+    const text = decoder.decode(buffer.slice(0, 80));
+    const isASCII = text.includes("facet");
+
+    let vertices = [];
+    if (isASCII) {
+      const textData = decoder.decode(buffer);
+      const vertexRegex = /vertex\s+([\d\.\-\+eE]+)\s+([\d\.\-\+eE]+)\s+([\d\.\-\+eE]+)/g;
+      let match;
+      while ((match = vertexRegex.exec(textData)) !== null) {
+        vertices.push([parseFloat(match[1]), parseFloat(match[2]), parseFloat(match[3])]);
+      }
+    } else {
+      const triangles = view.getUint32(80, true);
+      let offset = 84;
+      for (let i = 0; i < triangles; i++) {
+        for (let v = 0; v < 3; v++) {
+          const x = view.getFloat32(offset, true);
+          const y = view.getFloat32(offset + 4, true);
+          const z = view.getFloat32(offset + 8, true);
+          vertices.push([x, y, z]);
+          offset += 12;
+        }
+        offset += 2; // skip attribute byte count
+      }
+    }
+    console.log("Extracted vertices:", vertices.length);
+    return vertices;
+  }
+
+  // === PLOTLY SCATTER 3D ===
+  function plotPoints(points) {
+    if (!points || points.length === 0) {
+      alert("No vertices found in STL file.");
+      return;
+    }
+
+    const xs = points.map(p => p[0]);
+    const ys = points.map(p => p[1]);
+    const zs = points.map(p => p[2]);
+
+    const trace = {
+      x: xs, y: ys, z: zs,
+      mode: 'markers',
+      type: 'scatter3d',
+      marker: {
+        size: 2,
+        color: zs,
+        colorscale: 'Viridis',
+        opacity: 0.8
+      }
+    };
+
+    const layout = {
+      margin: {l:0, r:0, b:0, t:0},
+      scene: {
+        aspectmode: 'data',
+        xaxis: {title: 'X'},
+        yaxis: {title: 'Y'},
+        zaxis: {title: 'Z'},
+        bgcolor: '#fafafa'
+      },
+      paper_bgcolor: '#ffffff'
+    };
+
+    Plotly.newPlot('plot', [trace], layout, {responsive:true});
+  }
+  </script>
+</body>
+</html>
